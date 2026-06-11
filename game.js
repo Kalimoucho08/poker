@@ -2794,6 +2794,7 @@ function startNextCircuitTournament() {
   });
   state.startingChips = state._circuit.startingChips;
   state.handNumber = 0;
+  state.dealerIndex = Math.floor(Math.random() * state.players.length);
   state._tournament.phase = 'running';
   state._gameOver = false;
 
