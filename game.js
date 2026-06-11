@@ -1,8 +1,30 @@
 // ============================================================
-// TEXAS HOLD'EM POKER — Moteur de jeu complet
+// TEXAS HOLD'EM POKER V9 — Moteur de jeu complet
+// ============================================================
+// STRUCTURE :
+//   §1  L1-55    Constantes + État
+//   §2  L57-227  Deck + Évaluation des mains
+//   §3  L229-296 Helpers UI Cartes + Gestion joueurs
+//   §4  L300-325  Log + Setup UI
+//   §5  L334-471  Positionnement + Rendu des sièges
+//   §6  L473-597  Rendu cartes communes + Action bar + Phase
+//   §7  L609-715  Chip stacks + Pot + HUD tournoi + Log panel
+//   §8  L718-860  Rankings + Classement + Render all
+//   §9  L869-903  Overlay cartes
+//   §10 L908-1067 Start new hand + Post blinds
+//   §11 L1123-1313 Betting rounds + Advance phase
+//   §12 L1314-1494 Actions joueur (fold/check/raise) + NPC auto
+//   §13 L1495-1822 Showdown + Side pots + End hand
+//   §14 L1823-1912 Winner overlay + End game
+//   §15 L1991-2018 Reset game
+//   §16 L2019-2642 Event listeners + Setup UI + Advice
+//   §17 L2643-2652 Init
+//   §18 L2655-2802 Circuit (finish/transition/next/end)
 // ============================================================
 
-// --- Constantes ---
+// ============================================================
+// §1 — Constantes
+// ============================================================
 const SUITS = { s: '♠', h: '♥', d: '♦', c: '♣' };
 const SUIT_NAMES = { s: 'spades', h: 'hearts', d: 'diamonds', c: 'clubs' };
 const SUIT_IS_RED = { s: false, h: true, d: true, c: false };
@@ -23,7 +45,9 @@ const HAND_TYPES = [
 
 const PLAYER_COLORS = ['#e74c3c','#3498db','#2ecc71','#f39c12','#9b59b6','#1abc9c','#e67e22','#e91e63'];
 
-// --- État du jeu ---
+// ============================================================
+// §1b — État du jeu
+// ============================================================
 const state = {
   players: [],
   communityCards: [],
@@ -54,7 +78,9 @@ const state = {
   _circuitTransition: false, // V9: transition entre tournois active
 };
 
-// --- Utilitaires Deck ---
+// ============================================================
+// §2 — Deck + Évaluation des mains
+// ============================================================
 function createDeck() {
   const deck = [];
   for (const suit of Object.keys(SUITS)) {
@@ -226,7 +252,9 @@ function getHandName(type) {
   return HAND_TYPES[type] || 'Inconnu';
 }
 
-// --- Helpers UI Cartes ---
+// ============================================================
+// §3 — Helpers UI Cartes + Gestion joueurs
+// ============================================================
 function suitSymbol(suit) {
   return SUITS[suit];
 }
@@ -297,7 +325,9 @@ function removePlayer(id) {
   state.players = state.players.filter(p => p.id !== id);
 }
 
-// --- Log ---
+// ============================================================
+// §4 — Log + Setup UI
+// ============================================================
 const logEntries = [];
 
 function addLog(msg) {
@@ -307,7 +337,9 @@ function addLog(msg) {
   renderLog();
 }
 
-// --- Rendu UI ---
+// ============================================================
+// §5-6 — Rendu UI (seats, cartes, action bar, phase)
+// ============================================================
 
 function renderSetup() {
   const list = document.getElementById('player-list');
@@ -864,7 +896,9 @@ function renderAll() {
   }
 }
 
-// --- Overlay des cartes ---
+// ============================================================
+// §9 — Overlay cartes
+// ============================================================
 let cardOverlayTimer = null;
 
 function showCardsOverlay(playerId) {
@@ -1490,7 +1524,9 @@ function npcAutoPlay() {
   renderAll();
 }
 
-// --- Showdown & Pots ---
+// ============================================================
+// §13 — Showdown + Side pots + End hand
+// ============================================================
 
 function showdown() {
   state.awaitingAction = false;
@@ -2639,7 +2675,9 @@ function toggleAdvice() {
   }
 }
 
-// --- Initialisation ---
+// ============================================================
+// §17 — Init
+// ============================================================
 function init() {
   initEventListeners();
   renderSetup();
@@ -2650,6 +2688,10 @@ function init() {
   addPlayer('Le Gambler', true, NPC_TEMPLATES.find(t => t.id === 'gambler'));
   addPlayer('Le Poisson', true, NPC_TEMPLATES.find(t => t.id === 'fish'));
 }
+
+// ============================================================
+// §18 — Circuit (finish/transition/next/end)
+// ============================================================
 
 // V9: Fin d'un tournoi de circuit
 function finishCircuitTournament() {
