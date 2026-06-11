@@ -51,6 +51,7 @@ const state = {
   _tournamentSpeed: 'normal',// V8: 'turbo' | 'normal' | 'slow'
   _circuit: null,            // V9: objet circuit state
   _circuitMode: false,       // V9: mode circuit activé
+  _circuitTransition: false, // V9: transition entre tournois active
 };
 
 // --- Utilitaires Deck ---
@@ -2408,6 +2409,14 @@ function initEventListeners() {
 
   // Main suivante / Nouvelle partie — handler unifié
   document.getElementById('next-hand-btn').addEventListener('click', () => {
+    // V9: Transition circuit
+    if (state._circuitTransition) {
+      state._circuitTransition = false;
+      document.getElementById('winner-overlay').classList.add('hidden');
+      document.getElementById('action-bar').classList.remove('hidden');
+      startNextCircuitTournament();
+      return;
+    }
     if (state._gameOver === 'summary') {
       // Écran de fin de partie déjà affiché → retour au setup
       resetGame();
@@ -2669,10 +2678,58 @@ function finishCircuitTournament() {
 
   // Prochain tournoi ?
   if (state._circuit.currentTournament < state._circuit.totalTournaments) {
-    startNextCircuitTournament();
+    showCircuitTransitionOverlay();
   } else {
     endCircuit();
   }
+}
+
+// Overlay de transition entre deux tournois du circuit
+function showCircuitTransitionOverlay() {
+  const overlay = document.getElementById('winner-overlay');
+  const rankings = getCircuitRankings(state._circuit);
+  const leader = rankings[0];
+  const nextNum = state._circuit.currentTournament + 1;
+  const total = state._circuit.totalTournaments;
+
+  document.getElementById('winner-title').textContent = `✅ Tournoi ${state._circuit.currentTournament}/${total} terminé`;
+
+  // Résumé du tournoi qui vient de finir
+  const lastT = state._circuit.tournaments[state._circuit.tournaments.length - 1];
+  const lastResults = lastT ? lastT.results : [];
+  const winner = lastResults.find(r => r.position === 1);
+
+  let rankingHTML = rankings.map((r, i) => {
+    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '';
+    return `${medal} ${i+1}. ${r.name} <span style="color:#f0d060">${r.points} pts</span> <span style="color:#888;font-size:11px">(${r.wins}🥇 ${r.earnings}💰)</span>`;
+  }).join('<br>');
+
+  document.getElementById('showdown-cards').innerHTML = `
+    <div class="game-summary">
+      <div style="color:#2ecc71;font-size:15px;font-weight:700;margin-bottom:8px">
+        🏆 Vainqueur du tournoi : ${winner ? winner.name : '?'}
+        ${winner && winner.prize > 0 ? ' (+' + winner.prize + ' jetons)' : ''}
+      </div>
+      <div class="summary-stats">
+        <div>👑 Leader circuit : <b>${leader ? leader.name : '?'}</b> (${leader ? leader.points : 0} pts)</div>
+        <div>📊 ${state._circuit.currentTournament}/${state._circuit.totalTournaments} tournois joués</div>
+      </div>
+      <div class="summary-ranking">
+        <h4>Classement circuit</h4>
+        <div class="ranking-list" style="font-size:13px;line-height:2">${rankingHTML}</div>
+      </div>
+      <div style="margin-top:12px;padding:8px;background:rgba(46,204,113,0.1);border-radius:6px;font-size:12px;color:#888">
+        🦎 Les PNJ se sont adaptés. Les perdants deviennent plus agressifs, les leaders plus conservateurs.
+      </div>
+    </div>
+  `;
+  document.getElementById('winner-amount').textContent = '';
+  document.getElementById('next-hand-btn').textContent = `▶ Tournoi ${nextNum}/${total}`;
+
+  state._circuitTransition = true;
+  state._gameOver = false;
+  overlay.classList.remove('hidden');
+  document.getElementById('action-bar').classList.add('hidden');
 }
 
 function startNextCircuitTournament() {
