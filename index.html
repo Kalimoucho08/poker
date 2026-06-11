@@ -88,14 +88,24 @@
           <span>🔄 Mode Circuit (série de tournois avec les mêmes joueurs)</span>
         </label>
         <div id="circuit-config-row" class="hidden" style="margin-top:8px;display:flex;gap:16px;align-items:center;flex-wrap:wrap">
-          <label style="font-size:13px;color:#aaa">Nombre de tournois :</label>
+          <label style="font-size:13px;color:#aaa">Joueurs :</label>
+          <select id="circuit-players" style="background:#1a1a35;color:#e0e0e0;border:1px solid #3a3a55;border-radius:6px;padding:4px 10px;font-size:13px">
+            <option value="4">4</option>
+            <option value="5" selected>5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+          <label style="font-size:13px;color:#aaa">Tournois :</label>
           <select id="circuit-count" style="background:#1a1a35;color:#e0e0e0;border:1px solid #3a3a55;border-radius:6px;padding:4px 10px;font-size:13px">
             <option value="2">2</option>
             <option value="3" selected>3</option>
             <option value="4">4</option>
             <option value="5">5</option>
           </select>
-          <span style="font-size:12px;color:#888">(utilise la vitesse de blinds du mode Tournoi ci-dessus)</span>
+          <span style="font-size:12px;color:#888">(les PNJ sont tirés aléatoirement et restent les mêmes)</span>
         </div>
       </div>
 
@@ -243,6 +253,7 @@
   <script src="audio.js"></script>
   <script src="fx.js"></script>
   <script src="tournament.js"></script>
+  <script src="stats.js"></script>
   <script src="game.js"></script>
 </body>
 </html>

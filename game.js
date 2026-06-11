@@ -777,7 +777,76 @@ function renderRankings() {
     }
   }
 
+  // V9: Bouton toggle Carrière
+  html += '<div style="margin-top:16px;padding-top:12px;border-top:1px solid #2a2a45">'
+    + '<button id="toggle-career-btn" class="btn btn-sm" style="width:100%">📈 Voir Carrière</button>'
+    + '</div>';
+
   content.innerHTML = html;
+
+  // Handler toggle carrière
+  document.getElementById('toggle-career-btn').addEventListener('click', () => {
+    renderCareerView();
+  });
+}
+
+// V9: Vue Carrière (statistiques persistantes)
+function renderCareerView() {
+  const content = document.getElementById('rankings-content');
+  const title = document.getElementById('rankings-title');
+  title.textContent = '📈 Carrière (historique sauvegardé)';
+
+  const global = getGlobalStats();
+  const careers = getAllCareers('earnings');
+
+  let html = '<div style="color:#888;font-size:11px;margin-bottom:12px">'
+    + '🏆 ' + global.totalTournaments + ' tournois · 🎮 ' + global.totalGames + ' parties · 🔄 ' + global.totalCircuits + ' circuits'
+    + ' · 👥 ' + global.totalPlayers + ' joueurs</div>';
+
+  for (const c of careers) {
+    const pos = careers.indexOf(c);
+    const posClass = pos === 0 ? 'gold' : pos === 1 ? 'silver' : pos === 2 ? 'bronze' : 'normal';
+    const lastSeen = c.lastSeen ? new Date(c.lastSeen).toLocaleDateString('fr-FR') : '—';
+
+    html += '<div class="ranking-row">'
+      + '<div class="ranking-pos ' + posClass + '">' + (pos + 1) + '</div>'
+      + '<div class="ranking-info">'
+      + '<div class="ranking-name">' + c.name + '</div>'
+      + '<div class="ranking-detail">'
+      + c.tournaments + ' tournois · ' + c.games + ' parties · ' + c.circuits + ' circuits'
+      + ' · Vu le ' + lastSeen
+      + '</div></div>'
+      + '<div style="text-align:right">'
+      + '<div class="ranking-chips">' + c.points + ' pts</div>'
+      + '<div class="ranking-prize">' + c.wins + '🥇 ' + c.itms + '💰 ' + c.earnings + ' jetons</div>'
+      + '</div></div>';
+  }
+
+  // Boutons d'action
+  html += '<div style="margin-top:16px;display:flex;gap:8px">'
+    + '<button id="back-rankings-btn" class="btn btn-sm" style="flex:1">← Retour</button>'
+    + '<button id="export-career-btn" class="btn btn-sm">📥 Exporter</button>'
+    + '<button id="reset-career-btn" class="btn btn-sm btn-danger">🗑️ Reset</button>'
+    + '</div>';
+
+  content.innerHTML = html;
+
+  document.getElementById('back-rankings-btn').addEventListener('click', () => {
+    renderRankings();
+  });
+  document.getElementById('export-career-btn').addEventListener('click', () => {
+    const json = exportCareerJSON();
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'poker_career_' + new Date().toISOString().slice(0, 10) + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+  document.getElementById('reset-career-btn').addEventListener('click', () => {
+    if (resetCareer()) renderCareerView();
+  });
 }
 
 function renderAll() {
@@ -1738,6 +1807,9 @@ function showWinByFoldOverlay(winnerName, amount) {
   overlay.classList.remove('hidden');
   SFX.actionWin();
   FX.confetti(60);
+
+  // V9: Sauvegarde carrière (cash game)
+  recordGameResult(state.players);
 }
 
 function nextHandFromOverlay() {
@@ -1828,6 +1900,9 @@ function showWinnerOverlay(results, activePlayers) {
   overlay.classList.remove('hidden');
   SFX.actionWin();
   FX.confetti(60);
+
+  // V9: Sauvegarde carrière (cash game)
+  recordGameResult(state.players);
 }
 
 function endGame() {
@@ -2137,6 +2212,32 @@ function initEventListeners() {
     // V9: Initialiser le circuit si activé
     if (state._circuitMode) {
       const totalTournaments = parseInt(document.getElementById('circuit-count').value) || 3;
+      const targetPlayers = parseInt(document.getElementById('circuit-players').value) || 5;
+
+      // Vider et recréer les joueurs : 1 humain + PNJ aléatoires
+      const humanPlayer = state.players.find(p => !p.isNPC);
+      state.players = [];
+      if (humanPlayer) {
+        addPlayer(humanPlayer.name, false);
+      } else {
+        addPlayer('Moi', false);
+      }
+
+      // Générer des PNJ aléatoires (profils blendés) jusqu'au nombre cible
+      const usedNames = new Set(state.players.map(p => p.name));
+      while (state.players.length < targetPlayers) {
+        const blend = createNPCProfile();
+        // Éviter les doublons de nom
+        let name = blend.name;
+        let suffix = 1;
+        while (usedNames.has(name)) {
+          name = blend.name + ' ' + (++suffix);
+        }
+        usedNames.add(name);
+        blend.name = name;
+        addPlayer(name, true, blend);
+      }
+
       state._circuit = createCircuitState({
         totalTournaments,
         buyIn: 100,
@@ -2145,7 +2246,12 @@ function initEventListeners() {
         players: state.players.map(p => ({ name: p.name, isNPC: p.isNPC })),
       });
       state._circuit.currentTournament = 1;
-      addLog(`🔄 Circuit — Tournoi 1/${totalTournaments}`);
+      addLog(`🔄 Circuit — ${state.players.length} joueurs, ${totalTournaments} tournois`);
+      for (const p of state.players) {
+        if (p.isNPC && p._isBlend) {
+          addLog(`  🤖 ${p.name} (${p.npcName}${p._blendParents.length > 0 ? ' ← ' + p._blendParents.join('+') : ''})`);
+        }
+      }
     }
 
     document.getElementById('setup-screen').classList.add('hidden');
@@ -2553,6 +2659,9 @@ function finishCircuitTournament() {
   recordCircuitTournament(state._circuit, results);
   addLog(`✅ Tournoi ${state._circuit.currentTournament}/${state._circuit.totalTournaments} terminé !`);
 
+  // V9: Sauvegarde carrière
+  recordTournamentResult(state._tournament, state.players);
+
   // Adapter les PNJ pour le prochain tournoi
   for (const p of state.players) {
     if (p.isNPC) adaptNPCTraitsForCircuit(p, state._circuit);
@@ -2626,6 +2735,9 @@ function endCircuit() {
 
   SFX.actionWin();
   FX.confetti(80);
+
+  // V9: Sauvegarde carrière
+  recordCircuitResult(state._circuit);
 }
   renderSetup();
 }
