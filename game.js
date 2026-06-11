@@ -2216,6 +2216,25 @@ function initEventListeners() {
       state._tournamentMode = true;
       document.getElementById('tournament-speed-row').classList.remove('hidden');
       document.getElementById('starting-chips').value = 1500;
+
+      // V9: Pré-remplir les joueurs si pas déjà fait
+      if (state.players.length < 2) {
+        const target = parseInt(document.getElementById('circuit-players').value) || 5;
+        const humanName = document.getElementById('player-name-input').value.trim() || 'Moi';
+        state.players = [];
+        addPlayer(humanName, false);
+        const usedNames = new Set([humanName]);
+        while (state.players.length < target) {
+          const blend = createNPCProfile();
+          let name = blend.name;
+          let suffix = 1;
+          while (usedNames.has(name)) { name = blend.name + ' ' + (++suffix); }
+          usedNames.add(name);
+          blend.name = name;
+          addPlayer(name, true, blend);
+        }
+        renderSetup();
+      }
     } else {
       tourneyCheckbox.disabled = false;
     }
@@ -2249,31 +2268,6 @@ function initEventListeners() {
     // V9: Initialiser le circuit si activé
     if (state._circuitMode) {
       const totalTournaments = parseInt(document.getElementById('circuit-count').value) || 3;
-      const targetPlayers = parseInt(document.getElementById('circuit-players').value) || 5;
-
-      // Vider et recréer les joueurs : 1 humain + PNJ aléatoires
-      const humanPlayer = state.players.find(p => !p.isNPC);
-      state.players = [];
-      if (humanPlayer) {
-        addPlayer(humanPlayer.name, false);
-      } else {
-        addPlayer('Moi', false);
-      }
-
-      // Générer des PNJ aléatoires (profils blendés) jusqu'au nombre cible
-      const usedNames = new Set(state.players.map(p => p.name));
-      while (state.players.length < targetPlayers) {
-        const blend = createNPCProfile();
-        // Éviter les doublons de nom
-        let name = blend.name;
-        let suffix = 1;
-        while (usedNames.has(name)) {
-          name = blend.name + ' ' + (++suffix);
-        }
-        usedNames.add(name);
-        blend.name = name;
-        addPlayer(name, true, blend);
-      }
 
       state._circuit = createCircuitState({
         totalTournaments,
