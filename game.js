@@ -2097,11 +2097,15 @@ function initEventListeners() {
   document.getElementById('circuit-mode-checkbox').addEventListener('change', (e) => {
     state._circuitMode = e.target.checked;
     document.getElementById('circuit-config-row').classList.toggle('hidden', !e.target.checked);
+    const tourneyCheckbox = document.getElementById('tournament-mode-checkbox');
     if (e.target.checked) {
-      document.getElementById('tournament-mode-checkbox').checked = true;
+      tourneyCheckbox.checked = true;
+      tourneyCheckbox.disabled = true;
       state._tournamentMode = true;
       document.getElementById('tournament-speed-row').classList.remove('hidden');
       document.getElementById('starting-chips').value = 1500;
+    } else {
+      tourneyCheckbox.disabled = false;
     }
   });
 

@@ -75,7 +75,7 @@
           <span>🏆 Mode Tournoi (SNG — blinds progressives, classement, prix)</span>
         </label>
         <div id="tournament-speed-row" class="hidden" style="margin-top:8px;display:flex;gap:16px">
-          <label style="font-size:13px;color:#aaa">Vitesse :</label>
+          <label style="font-size:13px;color:#aaa">Vitesse des blinds :</label>
           <label style="cursor:pointer;font-size:13px"><input type="radio" name="t-speed" value="turbo"> ⚡ Turbo (5 mains/niveau)</label>
           <label style="cursor:pointer;font-size:13px"><input type="radio" name="t-speed" value="normal" checked> 🕐 Normal (10 mains/niveau)</label>
           <label style="cursor:pointer;font-size:13px"><input type="radio" name="t-speed" value="slow"> 🐢 Lent (20 mains/niveau)</label>
@@ -85,9 +85,9 @@
       <div class="setup-section" style="margin-top:8px">
         <label class="anon-toggle-label" style="display:flex;align-items:center;gap:10px;cursor:pointer">
           <input type="checkbox" id="circuit-mode-checkbox">
-          <span>🔄 Mode Circuit (série de tournois avec classement cumulé)</span>
+          <span>🔄 Mode Circuit (série de tournois avec les mêmes joueurs)</span>
         </label>
-        <div id="circuit-config-row" class="hidden" style="margin-top:8px;display:flex;gap:16px;align-items:center">
+        <div id="circuit-config-row" class="hidden" style="margin-top:8px;display:flex;gap:16px;align-items:center;flex-wrap:wrap">
           <label style="font-size:13px;color:#aaa">Nombre de tournois :</label>
           <select id="circuit-count" style="background:#1a1a35;color:#e0e0e0;border:1px solid #3a3a55;border-radius:6px;padding:4px 10px;font-size:13px">
             <option value="2">2</option>
@@ -95,6 +95,7 @@
             <option value="4">4</option>
             <option value="5">5</option>
           </select>
+          <span style="font-size:12px;color:#888">(utilise la vitesse de blinds du mode Tournoi ci-dessus)</span>
         </div>
       </div>
 
