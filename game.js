@@ -1757,11 +1757,12 @@ function endHand() {
   const humanAlive = playersWithChips.some(p => !p.isNPC);
   const isGameOver = playersWithChips.length <= 1 || (state.soloHumanMode && !humanAlive);
 
-  showWinByFoldOverlay(winnerName, totalPot);
-  if (isGameOver) {
-    if (state._circuit) {
-      finishCircuitTournament();
-    } else {
+  if (isGameOver && state._circuit) {
+    // Circuit : on zappe l'overlay de victoire simple, on va direct à la transition
+    finishCircuitTournament();
+  } else {
+    showWinByFoldOverlay(winnerName, totalPot);
+    if (isGameOver) {
       state._gameOver = 'lastHand';
       document.getElementById('next-hand-btn').textContent = 'Voir le résultat final ▶';
     }
