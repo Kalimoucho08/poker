@@ -2417,20 +2417,16 @@ function initEventListeners() {
       }
     }
 
-    if (!confirm(`⚠️ Tout miser — ${cp.chips} jetons (all-in) ?`)) return;
-
-    // Capturer le stack avant le setTimeout (sécurité)
-    const stack = cp.chips;
-
-    // Cacher les contrôles de relance si visibles
-    document.getElementById('raise-controls').classList.add('hidden');
-
+    // Defer confirm+action pour éviter [Violation] sur le confirm() bloquant
     setTimeout(() => {
+      if (!confirm(`⚠️ Tout miser — ${cp.chips} jetons (all-in) ?`)) return;
+
+      const stack = cp.chips;
+      document.getElementById('raise-controls').classList.add('hidden');
+
       if (toCall >= stack) {
-        // Déjà couvert par le call (l'all-in est juste un call complet)
         playerCheckCall();
       } else {
-        // Relancer all-in : le montant = tout le stack en plus du call
         const raiseBy = stack - toCall;
         playerRaise(raiseBy);
       }
