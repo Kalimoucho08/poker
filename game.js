@@ -2649,6 +2649,7 @@ function init() {
   addPlayer('Le Requin', true, NPC_TEMPLATES.find(t => t.id === 'shark'));
   addPlayer('Le Gambler', true, NPC_TEMPLATES.find(t => t.id === 'gambler'));
   addPlayer('Le Poisson', true, NPC_TEMPLATES.find(t => t.id === 'fish'));
+}
 
 // V9: Fin d'un tournoi de circuit
 function finishCircuitTournament() {
@@ -2795,8 +2796,6 @@ function endCircuit() {
 
   // V9: Sauvegarde carrière
   recordCircuitResult(state._circuit);
-}
-  renderSetup();
 }
 
 // Démarrer quand le DOM est prêt
