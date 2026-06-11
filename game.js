@@ -2301,14 +2301,18 @@ function initEventListeners() {
   // Actions joueur
   document.getElementById('fold-btn').addEventListener('click', () => {
     if (!state.awaitingAction) return;
-    playerFold();
-    renderAll();
+    setTimeout(() => {
+      playerFold();
+      renderAll();
+    }, 0);
   });
 
   document.getElementById('check-call-btn').addEventListener('click', () => {
     if (!state.awaitingAction) return;
-    playerCheckCall();
-    renderAll();
+    setTimeout(() => {
+      playerCheckCall();
+      renderAll();
+    }, 0);
   });
 
   document.getElementById('raise-btn').addEventListener('click', () => {
@@ -2322,8 +2326,10 @@ function initEventListeners() {
       const raiseBy = fixedBet;
       const totalNeeded = toCall + raiseBy;
       if (totalNeeded > cp.chips) return;
-      playerRaise(raiseBy);
-      renderAll();
+      setTimeout(() => {
+        playerRaise(raiseBy);
+        renderAll();
+      }, 0);
       return;
     }
 
@@ -2379,8 +2385,10 @@ function initEventListeners() {
     document.getElementById('check-call-btn').classList.remove('hidden');
     document.getElementById('allin-btn').classList.remove('hidden');
 
-    playerRaise(raiseBy);
-    renderAll();
+    setTimeout(() => {
+      playerRaise(raiseBy);
+      renderAll();
+    }, 0);
   });
 
   document.getElementById('cancel-raise-btn').addEventListener('click', () => {
@@ -2411,18 +2419,23 @@ function initEventListeners() {
 
     if (!confirm(`⚠️ Tout miser — ${cp.chips} jetons (all-in) ?`)) return;
 
+    // Capturer le stack avant le setTimeout (sécurité)
+    const stack = cp.chips;
+
     // Cacher les contrôles de relance si visibles
     document.getElementById('raise-controls').classList.add('hidden');
 
-    if (toCall >= cp.chips) {
-      // Déjà couvert par le call (l'all-in est juste un call complet)
-      playerCheckCall();
-    } else {
-      // Relancer all-in : le montant = tout le stack en plus du call
-      const raiseBy = cp.chips - toCall;
-      playerRaise(raiseBy);
-    }
-    renderAll();
+    setTimeout(() => {
+      if (toCall >= stack) {
+        // Déjà couvert par le call (l'all-in est juste un call complet)
+        playerCheckCall();
+      } else {
+        // Relancer all-in : le montant = tout le stack en plus du call
+        const raiseBy = stack - toCall;
+        playerRaise(raiseBy);
+      }
+      renderAll();
+    }, 0);
   });
 
   // Overlay cartes
@@ -2814,11 +2827,16 @@ function endCircuit() {
     return `${medal} ${i+1}. ${r.name} — ${r.points} pts (${r.wins} victoires, ${r.earnings} jetons)`;
   }).join('<br>');
 
+  // Protection: si rankings est vide (ex: bug de synchro), afficher un fallback
+  const championDisplay = winner
+    ? `<b>${winner.name}</b> (${winner.points} pts)`
+    : '— (données indisponibles)';
+
   document.getElementById('showdown-cards').innerHTML = `
     <div class="game-summary">
       <div class="summary-stats">
         <div>🏆 <b>${state._circuit.totalTournaments}</b> tournois joués</div>
-        <div>👑 Champion : <b>${winner.name}</b> (${winner.points} pts)</div>
+        <div>👑 Champion : ${championDisplay}</div>
       </div>
       <div class="summary-ranking">
         <h4>Classement final du circuit</h4>
