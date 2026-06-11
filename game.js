@@ -2713,15 +2713,19 @@ function finishCircuitTournament() {
   }
 
   // Prochain tournoi ?
+  console.log('[CIRCUIT] finishCircuitTournament: current=', state._circuit.currentTournament, 'total=', state._circuit.totalTournaments);
   if (state._circuit.currentTournament < state._circuit.totalTournaments) {
+    console.log('[CIRCUIT] → showCircuitTransitionOverlay');
     showCircuitTransitionOverlay();
   } else {
+    console.log('[CIRCUIT] → endCircuit');
     endCircuit();
   }
 }
 
 // Overlay de transition entre deux tournois du circuit
 function showCircuitTransitionOverlay() {
+  console.log('[CIRCUIT] showCircuitTransitionOverlay appelé');
   const overlay = document.getElementById('winner-overlay');
   const rankings = getCircuitRankings(state._circuit);
   const leader = rankings[0];
@@ -2769,6 +2773,7 @@ function showCircuitTransitionOverlay() {
 }
 
 function startNextCircuitTournament() {
+  console.log('[CIRCUIT] startNextCircuitTournament, current avant:', state._circuit.currentTournament);
   state._circuit.currentTournament++;
 
   // Reset état du jeu pour le nouveau tournoi
@@ -2796,6 +2801,7 @@ function startNextCircuitTournament() {
 }
 
 function endCircuit() {
+  console.log('[CIRCUIT] endCircuit appelé, tournois=', state._circuit.tournaments.length);
   state._gameOver = 'lastHand';
   const overlay = document.getElementById('winner-overlay');
   const rankings = getCircuitRankings(state._circuit);
