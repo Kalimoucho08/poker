@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 25">
+  <text x="10" y="20" font-size="18" fill="#1a1a2e" font-family="serif">♠</text>
+  <text x="35" y="20" font-size="18" fill="#c0392b" font-family="serif">♥</text>
+  <text x="60" y="20" font-size="18" fill="#c0392b" font-family="serif">♦</text>
+  <text x="85" y="20" font-size="18" fill="#1a1a2e" font-family="serif">♣</text>
+</svg>

@@ -48,6 +48,12 @@ Sur le **PC fixe uniquement**, un script permet de générer des images clipart 
 - Prompts en français (universel, sans article)
 - **Ne JAMAIS analyser/vérifier le résultat des images générées** — Jérôme valide visuellement
 
+**Avant d'utiliser image-gen ou generate_clipart.py**, vérifier que Forge est lancé :
+1. Tester `curl -s http://127.0.0.1:7860` (ou localhost:7860)
+2. Si pas de réponse → lancer `bash /home/jdema/forge/webui.sh` en arrière-plan
+3. Attendre le message "Running on local URL" dans les logs (~600s max)
+4. Ensuite image-gen est prêt
+
 Sur le laptop : pas de GPU, pas de génération clipart.
 
 ## Règles de travail

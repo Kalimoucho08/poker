@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="48" fill="#1a0d2a" stroke="#9b59b6" stroke-width="3"/>
+  <path d="M22,35 Q30,20 38,35 Q46,15 54,35 Q62,20 70,35 Q78,25 80,40" fill="none" stroke="#9b59b6" stroke-width="2" opacity="0.6"/>
+  <circle cx="35" cy="52" r="8" fill="#9b59b6" opacity="0.4"/>
+  <circle cx="55" cy="48" r="7" fill="#9b59b6" opacity="0.5"/>
+  <circle cx="48" cy="58" r="6" fill="#e74c3c" opacity="0.5"/>
+  <path d="M22,68 Q50,62 78,68" fill="none" stroke="#9b59b6" stroke-width="1.5" opacity="0.4"/>
+  <text x="50" y="82" font-size="11" fill="#9b59b6" text-anchor="middle" font-family="monospace">ARTIST</text>
+</svg>

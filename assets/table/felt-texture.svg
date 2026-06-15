@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+      <feComponentTransfer in="grayNoise" result="softNoise">
+        <feFuncA type="linear" slope="0.06"/>
+      </feComponentTransfer>
+      <feComposite in="softNoise" in2="SourceGraphic" operator="in"/>
+    </filter>
+    <radialGradient id="feltGrad" cx="50%" cy="50%">
+      <stop offset="0%" stop-color="#27744a"/>
+      <stop offset="100%" stop-color="#1a5c38"/>
+    </radialGradient>
+  </defs>
+  <rect width="200" height="200" fill="url(#feltGrad)"/>
+  <rect width="200" height="200" fill="none" filter="url(#noise)"/>
+</svg>

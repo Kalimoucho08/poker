@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="48" fill="#2a0d0d" stroke="#e74c3c" stroke-width="3"/>
+  <path d="M20,35 L30,25 L40,35 L50,25 L60,35 L70,25 L80,35" fill="none" stroke="#e74c3c" stroke-width="2" opacity="0.5"/>
+  <circle cx="36" cy="44" r="8" fill="#e74c3c" opacity="0.8"/>
+  <circle cx="64" cy="44" r="8" fill="#e74c3c" opacity="0.8"/>
+  <circle cx="36" cy="44" r="3.5" fill="#fff"/>
+  <circle cx="64" cy="44" r="3.5" fill="#fff"/>
+  <path d="M30,60 Q50,72 70,60" fill="none" stroke="#e74c3c" stroke-width="2.5" opacity="0.7"/>
+  <text x="50" y="82" font-size="11" fill="#e74c3c" text-anchor="middle" font-family="monospace">MANIAC</text>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 240">
+  <defs>
+    <filter id="shadow">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <!-- Card background -->
+  <rect x="2" y="2" width="164" height="236" rx="8" ry="8" fill="#ffffff" filter="url(#shadow)"/>
+  <rect x="2" y="2" width="164" height="236" rx="8" ry="8" fill="none" stroke="#d0d0d0" stroke-width="1"/>
+  
+  <!-- Top-left rank & suit -->
+  <text x="14" y="30" font-size="18" font-weight="bold" fill="#1a1a2e" font-family="'Segoe UI', Arial, sans-serif" text-anchor="start">4</text>
+  <text x="14" y="50" font-size="14" fill="#1a1a2e" font-family="serif" text-anchor="start">♠</text>
+  
+  <!-- Center symbols -->
+  <text x="62" y="80" font-size="26" fill="#1a1a2e" font-family="serif" text-anchor="middle" dominant-baseline="central">♠</text>
+  <text x="106" y="80" font-size="26" fill="#1a1a2e" font-family="serif" text-anchor="middle" dominant-baseline="central">♠</text>
+  <text x="62" y="160" font-size="26" fill="#1a1a2e" font-family="serif" text-anchor="middle" dominant-baseline="central">♠</text>
+  <text x="106" y="160" font-size="26" fill="#1a1a2e" font-family="serif" text-anchor="middle" dominant-baseline="central">♠</text>
+  <text x="154" y="202" font-size="18" font-weight="bold" fill="#1a1a2e" font-family="'Segoe UI', Arial, sans-serif" text-anchor="end" transform="rotate(180, 154, 202)">4</text>
+  <text x="154" y="222" font-size="14" fill="#1a1a2e" font-family="serif" text-anchor="end">♠</text>
+  
+  <!-- Face card designs -->
+</svg>
