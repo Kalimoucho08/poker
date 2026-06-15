@@ -39,22 +39,32 @@ Tous ne sont pas disponibles sur les deux machines :
 Si un outil est noté ❌ sur la machine courante, ne pas proposer de l'utiliser.
 Ne pas essayer de lancer image-gen sur le laptop.
 
-### Génération d'assets graphiques (clipart, images)
+### Génération d'assets graphiques
 
-Sur le **PC fixe uniquement**, un script permet de générer des images clipart pour les jeux :
-- `python3 ~/workspace/generate_clipart.py`
-- Utilise ComfyUI + DreamShaperXL_Lightning-SFW via Forge WebUI (port :7860)
-- Paramètres : dpmpp_sde+karras, 5 steps, CFG 2, 768px
-- Prompts en français (universel, sans article)
-- **Ne JAMAIS analyser/vérifier le résultat des images générées** — Jérôme valide visuellement
+Deux scripts existent, chacun avec son serveur et ses paramètres :
 
-**Avant d'utiliser image-gen ou generate_clipart.py**, vérifier que Forge est lancé :
-1. Tester `curl -s http://127.0.0.1:7860` (ou localhost:7860)
-2. Si pas de réponse → lancer `bash /home/jdema/forge/webui.sh` en arrière-plan
-3. Attendre le message "Running on local URL" dans les logs (~600s max)
-4. Ensuite image-gen est prêt
+**A. Assets pour le jeu Poker** (jetons, avatars, icônes, dos de carte, tapis)
+- Script : `python3 ~/workspace/gen_poker_v2.py`
+- Serveur : **Forge** (port 7860) — API A1111 (`/sdapi/v1/`)
+- Modèle : DreamShaperXL_Lightning-SFW + LoRA Flat_Vector_XL
+- Paramètres : 6 steps, CFG 3.5, DPM++ 2M SDE Karras, 512x512
+- **Lancer Forge d'abord :** `bash /home/jdema/forge/webui.sh` (attendre "Running on local URL")
+- Les images vont dans `assets/` du projet poker
 
-Sur le laptop : pas de GPU, pas de génération clipart.
+**B. Cliparts éducatifs génériques** (objets, animaux, formes)
+- Script : `python3 ~/workspace/generate_clipart.py`
+- Serveur : **ComfyUI** (port 8188) — API directe
+- Modèle : DreamShaperXL_Lightning-SFW
+- Paramètres : 5 steps, CFG 2, dpmpp_sde + karras, 768x768
+- **Lancer ComfyUI d'abord :** (à définir — pas Forge)
+
+**C. Via MCP image-gen** (Forge également, port 7860)
+- Utile pour une génération ponctuelle
+- Mêmes paramètres que le script A
+
+**Règle impérative : Ne JAMAIS analyser/vérifier le résultat des images générées** — Jérôme valide visuellement ce qui lui plaît ou pas.
+
+Sur le laptop : pas de GPU, pas de génération d'images.
 
 ## Règles de travail
 - Tout le code est en anglais (jeu), les dialogues/contexte en français

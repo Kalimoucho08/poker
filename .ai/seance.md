@@ -1,27 +1,31 @@
 # Séance en cours
 
 ## Statut
-Création d'une bibliothèque complète d'assets SVG pour le jeu de poker.
+✅ Génération d'assets V2 — DreamShaperXL + Flat_Vector_XL LoRA, 512×512
 
 ## Fait
-- ✅ Génération de 101 assets SVG dans `assets/`
-  - 53 cartes (52 faces + 1 dos)
-  - 6 jetons (1, 5, 10, 25, 100, 500)
-  - 10 icônes (dealer, actions, son, trophée...)
-  - 20 avatars PNJ (un par archétype)
-  - 4 symboles de couleur (♠♥♦♣)
-  - 3 assets table (tapis, bordure, feutrine)
-  - 5 assets UI (logo, fond, confettis...)
+- ✅ 39 PNG générés via `gen_poker_assets.py` (Forge + pixelArtDiffusionXL)
+- ✅ 101 SVG créés en complément (cartes, icônes, UI)
+- Total : 140 fichiers dans `assets/` (20 Mo)
+
+### Détail PNG (clipart AI)
+| Catégorie | Dossier | Contenu |
+|-----------|---------|---------|
+| Dos de carte | `cards/dos-carte/` | card-back.png |
+| Jetons | `chips/` | 6 jetons (blanc, rouge, bleu, vert, violet, or) |
+| Symboles | `suits/` | 4 couleurs (♠♥♦♣) |
+| Icônes | `icons/` | dealer, trophée, fold, check, raise, all-in |
+| Tapis | `table/` | table-felt.png |
+| Logo | `ui/` | logo-banner.png |
+| Avatars | `avatars/` | 20 portraits PNJ |
+
+### Accès
+Toutes les images sont dans **`/home/jdema/coding2/poker/assets/`**
 
 ## Prochaines étapes
-- Intégrer les assets SVG dans le jeu (modifier game.js, index.html, style.css)
-  - Remplacer les cartes CSS par les cartes SVG
-  - Remplacer les jetons CSS par les jetons SVG
-  - Ajouter les avatars PNJ dans la grille de sélection
-  - Ajouter le logo dans l'écran d'accueil
-  - Utiliser les icônes dans les boutons d'action
-- ✅ Déploiement testé et fonctionnel
-- Cloner sur le laptop et tester j-reprends
+- Intégrer les assets dans le jeu (game.js, index.html, style.css)
+- Déploiement
+- Cloner sur le laptop
 
 ## Machine actuelle
 PC fixe (jdema)
