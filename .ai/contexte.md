@@ -23,6 +23,22 @@ Un backup supplémentaire est copié sur **pCloud** sous forme de bundle.
 - `./claude.sh` depuis `~/coding2/poker/` (ou `bash claude.sh`)
 - Utilise `--bare` pour éviter les hooks et le CLAUDE.md global de l'ancien système
 
+## Outils disponibles (MCP)
+
+Les serveurs MCP sont chargés depuis `~/.claude/.mcp.json` via `--mcp-config`.
+Tous ne sont pas disponibles sur les deux machines :
+
+| Outil | PC fixe (jdema) | Laptop (gege) |
+|---|---|---|
+| gemini-vision | ✅ analyse d'images | ✅ (via clés Gemini) |
+| chrome-devtools | ✅ Chrome Windows :9222 | ❌ (pas de Chrome configuré) |
+| perplexity-web | ✅ recherche Perplexity | ✅ |
+| image-gen | ✅ Stable Diffusion (Forge :7860) | ❌ (pas de GPU) |
+| civitai | ✅ recherche modèles | ❌ |
+
+Si un outil est noté ❌ sur la machine courante, ne pas proposer de l'utiliser.
+Ne pas essayer de lancer image-gen sur le laptop.
+
 ## Règles de travail
 - Tout le code est en anglais (jeu), les dialogues/contexte en français
 - Backup git avant toute modification : `git tag backup-avant-xxx`
