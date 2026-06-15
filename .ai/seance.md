@@ -1,12 +1,13 @@
 # Séance en cours
 
 ## Statut
-Première mise en place du projet dans coding2.
+Première mise en place du projet dans coding2/poker.
+Le contexte multimachine a été ajouté à .ai/contexte.md.
 
 ## Prochaines étapes
-- Déployer sur InfinityFree /htdocs/jeux/poker/
-- Tester le workflow j-archive / j-reprends
+- Tester le déploiement sur InfinityFree
+- Cloner sur le laptop et tester j-reprends
+- Valider le workflow complet
 
-## À faire
-- [ ] Déploiement initial
-- [ ] Test push/pull entre machines
+## Machine actuelle
+PC fixe (jdema)

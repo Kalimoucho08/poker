@@ -3,12 +3,33 @@
 ## Qu'est-ce que c'est
 Texas Hold'em Poker — moteur JS vanilla. V9 active à la racine, versions antérieures (v6/v7/v8) dans les sous-dossiers.
 
+## Environnement de travail — deux machines
+
+Ce projet vit sur **deux machines** :
+- **PC fixe** (jdema) — i7, RTX 3080, WSL2 — machine principale
+- **Laptop** (gege) — portable ULIS, pas de GPU, WSL2 — machine secondaire
+
+Le code + la mémoire (.ai/) **voyagent entre les machines via GitHub**.
+Un backup supplémentaire est copié sur **pCloud** sous forme de bundle.
+
+### Synchronisation
+- `bash j-archive.sh` → commit + tag de backup + push GitHub + bundle pCloud
+- `bash j-reprends.sh` → pull GitHub + vérification bundle pCloud
+- **Ne jamais travailler sur les deux machines en même temps**
+- **Toujours lancer j-archive avant de changer de machine**
+- **Toujours lancer j-reprends en arrivant sur l'autre machine**
+
+### Lancement de Claude Code
+- `./claude.sh` depuis `~/coding2/poker/` (ou `bash claude.sh`)
+- Utilise `--bare` pour éviter les hooks et le CLAUDE.md global de l'ancien système
+
 ## Règles de travail
 - Tout le code est en anglais (jeu), les dialogues/contexte en français
 - Backup git avant toute modification : `git tag backup-avant-xxx`
 - Commits en français, descriptifs
 - Le dossier `.ai/` contient la mémoire du projet — versionné dans git
 - Le dossier `strategies/` contient l'IA des joueurs
+- Ce projet est dans `~/coding2/` — c'est un bac à sable pour tester le nouveau workflow
 
 ## Architecture
 - `index.html` — point d'entrée
