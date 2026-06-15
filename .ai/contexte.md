@@ -39,6 +39,17 @@ Tous ne sont pas disponibles sur les deux machines :
 Si un outil est noté ❌ sur la machine courante, ne pas proposer de l'utiliser.
 Ne pas essayer de lancer image-gen sur le laptop.
 
+### Génération d'assets graphiques (clipart, images)
+
+Sur le **PC fixe uniquement**, un script permet de générer des images clipart pour les jeux :
+- `python3 ~/workspace/generate_clipart.py`
+- Utilise ComfyUI + DreamShaperXL_Lightning-SFW via Forge WebUI (port :7860)
+- Paramètres : dpmpp_sde+karras, 5 steps, CFG 2, 768px
+- Prompts en français (universel, sans article)
+- **Ne JAMAIS analyser/vérifier le résultat des images générées** — Jérôme valide visuellement
+
+Sur le laptop : pas de GPU, pas de génération clipart.
+
 ## Règles de travail
 - Tout le code est en anglais (jeu), les dialogues/contexte en français
 - Backup git avant toute modification : `git tag backup-avant-xxx`
