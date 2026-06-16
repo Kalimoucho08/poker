@@ -73,6 +73,7 @@ Sur le laptop : pas de GPU, pas de génération d'images.
 - Le dossier `.ai/` contient la mémoire du projet — versionné dans git
 - Le dossier `strategies/` contient l'IA des joueurs
 - Ce projet est dans `~/coding2/` — c'est un bac à sable pour tester le nouveau workflow
+- **Pédagogie** : montrer ce qui est fait concrètement (commandes lancées, fichiers modifiés) et expliquer comment Jérôme peut le refaire par lui-même
 
 ## Architecture
 - `index.html` — point d'entrée
