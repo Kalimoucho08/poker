@@ -25,7 +25,9 @@ Toutes les images sont dans **`/home/jdema/coding2/poker/assets/`**
 ## Prochaines étapes
 - Intégrer les assets dans le jeu (game.js, index.html, style.css)
 - Déploiement
-- Cloner sur le laptop
 
 ## Machine actuelle
-PC fixe (jdema)
+Laptop (gege, ULIS-DECOPONS)
+
+## Dernière synchro
+- Clone frais depuis GitHub — 2026-06-16 14:27
