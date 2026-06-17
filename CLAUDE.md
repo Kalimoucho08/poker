@@ -23,7 +23,7 @@ Le code + la mémoire voyagent ensemble.
 
 ---
 
-## Commandes vocales (quand Claude Code tourne)
+## Instructions (quand Claude Code tourne)
 
 Quand je dis **« je reprends »** :
 1. `hostname` et `whoami` → détermine la machine (jdema=fixe, gege=laptop)

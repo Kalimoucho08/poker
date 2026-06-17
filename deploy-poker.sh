@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 # Déploiement poker → InfinityFree /htdocs/jeux/poker/
-set -euo pipefail
-
+# Credentials FT>netrc
 HOST="ftpupload.net"
 REMOTE_DIR="/htdocs/jeux/poker"
 LOCAL_DIR="$(cd "$(dirname "$0")" && pwd)"
-PASS="VGA5GC2cJVXy"
 
 echo "→ Déploiement de $LOCAL_DIR vers $HOST:$REMOTE_DIR"
 
@@ -13,7 +11,7 @@ lftp -c "
 set ssl:verify-certificate no
 set ftp:ssl-allow no
 open $HOST
-user if0_40103376 $PASS
+user if0_40103376 $(grep -A2 'ftpupload.net' ~/.netrc | grep password | awk '{print $NF}')
 mirror --reverse --verbose --delete \
   --exclude .git/ \
   --exclude .ai/ \
@@ -29,5 +27,3 @@ mirror --reverse --verbose --delete \
 echo '✓ Déploiement terminé'
 bye
 " 2>&1
-
-echo "→ Poker en ligne : http://generateurs-scolaires.free.nf/jeux/poker/"
