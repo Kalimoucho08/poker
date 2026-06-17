@@ -1,11 +1,14 @@
 # Séance en cours
 
+## Machine actuelle
+fixe (jdema, grospcpapa)
+
 ## Statut
-Le workflow a été simplifié : `./lancer.sh` fait tout (synchro + détection machine + lancement Claude Code).
+- Projet Poker V9 — fonctionnel et complet
+- `lancer.sh` (dans `~/coding2/`) fonctionne : synchro git + détection machine + lancement Claude Code
+- Testé sur le fixe ✅
 
 ## Prochaines étapes
-- Tester le nouveau lancer.sh sur le fixe
-- Tester sur le laptop après copie
-
-## Machine actuelle
-PC fixe (jdema, grospcpapa)
+- Nettoyer TODO.md (encore titré V6)
+- Tester `lancer.sh` sur le laptop
+- Déployer la dernière version sur InfinityFree si besoin
