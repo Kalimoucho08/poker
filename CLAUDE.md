@@ -33,11 +33,7 @@ Quand je dis **« je reprends »** :
 5. Résume l'état : où on en est, prochaine étape
 
 Quand je dis **« on archive »** ou **« sauvegarde »** :
-1. `git add -A`
-2. `git commit -m "archive DATE"` (avec la date du jour)
-3. `git tag backup-DATE`
-4. `git push origin main --tags`
-5. Mets à jour `.ai/seance.md`
+→ Exécute `bash j-archive.sh` (qui fait git add/commit/tag/push + bundle pCloud) et mets à jour `.ai/seance.md`.
 
 Quand je dis **« je suis sur le fixe »** ou **« je suis sur le laptop »** :
 → Met à jour `.ai/seance.md` avec la bonne machine
