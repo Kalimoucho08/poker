@@ -20,3 +20,30 @@ Le code + la mémoire voyagent ensemble.
 - Sur la machine A : travaille, puis `bash j-archive.sh`
 - Sur la machine B : `bash j-reprends.sh`, puis continue
 - Ne pas travailler sur les deux machines en même temps sur le même projet
+
+---
+
+## Commandes vocales (quand Claude Code tourne)
+
+Quand je dis **« je reprends »** :
+1. `hostname` et `whoami` → détermine la machine (jdema=fixe, gege=laptop)
+2. `git status` → vérifie l'état du projet
+3. `git pull origin main` → synchronise avec GitHub
+4. Mets à jour `.ai/seance.md` avec la machine actuelle
+5. Résume l'état : où on en est, prochaine étape
+
+Quand je dis **« on archive »** ou **« sauvegarde »** :
+1. `git add -A`
+2. `git commit -m "archive DATE"` (avec la date du jour)
+3. `git tag backup-DATE`
+4. `git push origin main --tags`
+5. Mets à jour `.ai/seance.md`
+
+Quand je dis **« je suis sur le fixe »** ou **« je suis sur le laptop »** :
+→ Met à jour `.ai/seance.md` avec la bonne machine
+
+---
+
+## Rappel
+- `./lancer.sh` fait déjà la synchro (git pull) avant de lancer Claude
+- Les commandes ci-dessus servent **pendant** la session, si besoin
